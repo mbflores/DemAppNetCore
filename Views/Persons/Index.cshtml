@@ -1,0 +1,38 @@
+﻿@using System.ComponentModel.DataAnnotations.Schema
+@model List<Person>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var hasPerson = Model.Count != 0;
+}
+
+<h1>Persons</h1>
+<a asp-controller="Persons" asp-action="Save" class="btn btn-primary">Add Person</a>
+
+@if (hasPerson)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Address</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in Model)
+            {
+                <tr>
+                    <td>@person.LastName, @person.FirstName</td>
+                    <td>@person.Address</td>
+                    <td> <a class="btn btn-success" asp-controller="Persons" asp-action="UpdatePerson" asp-route-id="@person.Id">Update</a></td>
+                    <td> <a class="btn btn-danger" asp-controller ="Persons" asp-action="DeletePerson" asp-route-id="@person.Id">Delete</a></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+@if (!hasPerson)
+{
+    <h1>NO PERSON PRESENT IN THE DB</h1>
+}
